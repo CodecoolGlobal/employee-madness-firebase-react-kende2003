@@ -4,37 +4,73 @@ import DeleteButton from "./components/DeleteButton";
 import FilterInputs from "../../FilterInputs";
 
 
-
 const EmployeeTable = ({ employees, onDelete }) => {
+  const [upadtedEmployees, setUpdatedEmployess] = useState(employees)
+  const [filteredEmployees, setFilteredEmployees] = useState(upadtedEmployees);
   const [filter, setFilter] = useState(
     {
       position: "",
       level: "",
+      name: "",
+      direction: ""
     }
   )
   console.log(filter);
+  useEffect(() => {
+    setUpdatedEmployess(
+       employees.map((employee) => {
+        const split = employee.name.split(" ")
+        let splittedName = {
+    
+        }
+        split.length === 2 ? (splittedName = {
+          first: split[0],
+          last: split[1]
+        })
+        :  splittedName = {
+            first: split[0],
+            middle: split[1],
+            last: split[2]
+        }
+        return {...employee, nameObj: splittedName}
+    
+       })
+     
+    )    
+  }, [employees])
   
-  const [filteredEmployees, setFilteredEmployees] = useState(employees);
-  console.log(filteredEmployees);
+  console.log(upadtedEmployees);
+  
+  
+    useEffect(() => {
+      let newFilteredEmployees = [...upadtedEmployees];
+  
+      if (filter.position) {
+          newFilteredEmployees = newFilteredEmployees.filter((employee) =>
+              employee.position.toLowerCase().includes(filter.position.toLowerCase())
+          );
+      }
+  
+      if (filter.level) {
+          newFilteredEmployees = newFilteredEmployees.filter((employee) =>
+              employee.level.toLowerCase().includes(filter.level.toLowerCase())
+          );
+      }
+  
+      if (filter.name && filter.direction) {
+          newFilteredEmployees.sort((a, b) => {
+            const nameA = a.nameObj[filter.name].toLowerCase() 
+            const nameB = b.nameObj[filter.name].toLowerCase() 
+
+              if (nameA < nameB) return filter.direction === "asc" ? -1 : 1;
+              if (nameA > nameB) return filter.direction === "asc" ? 1 : -1;
+              return 0;
+          });
+      }
   
 
-  useEffect(() => {
-    console.log("Filter updated:", filter); 
-    console.log("Employees array:", employees); 
-    if (filter.position || filter.level) {
-      const newFilteredEmployees = employees.filter((employee) => {
-        console.log("Filter updated:", filter); 
-        console.log("Employees array:", employees); 
-        const matchesPosition = filter.position ? employee.position.includes(filter.position) : true
-        const matchesLevel = filter.level ? employee.level.includes(filter.level) : true
-        return matchesPosition && matchesLevel
-      })
-      setFilteredEmployees(newFilteredEmployees)
-    }
-    else {
-      setFilteredEmployees(employees)
-    }
-  }, [filter, employees])
+      setFilteredEmployees(newFilteredEmployees);
+  }, [filter, employees, upadtedEmployees]);
   
   return (
     <>
