@@ -13,6 +13,7 @@ import EquipmentCreator from "./Pages/EquipmentCreator";
 import EquipmentUpdater from "./Pages/EquipmentUpdater";
 import SignIn from "./Pages/SignIn";
 import SignUp from "./Pages/SignUp";
+import SearchPage from "./Pages/SearchPage";
 
 import Protected from "./Components/Protected";
 import GuestsOnly from "./Components/GuestsOnly";
@@ -75,6 +76,14 @@ const router = createBrowserRouter([
         element: (
           <Protected>
             <EquipmentUpdater/>
+          </Protected>
+        )
+      },
+      {
+        path: "/employees/:search",
+        element: (
+          <Protected>
+            <SearchPage />
           </Protected>
         )
       },
