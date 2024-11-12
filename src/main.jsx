@@ -8,6 +8,9 @@ import Home from "./Pages/Home";
 import EmployeeList from "./Pages/EmployeeList";
 import EmployeeCreator from "./Pages/EmployeeCreator";
 import EmployeeUpdater from "./Pages/EmployeeUpdater";
+import EquipmentList from "./Pages/EquipmentList";
+import EquipmentCreator from "./Pages/EquipmentCreator";
+import EquipmentUpdater from "./Pages/EquipmentUpdater";
 import SignIn from "./Pages/SignIn";
 import SignUp from "./Pages/SignUp";
 
@@ -50,6 +53,30 @@ const router = createBrowserRouter([
             <EmployeeUpdater />
           </Protected>
         ),
+      },
+      {
+        path: "/equipments",
+        element: (
+          <Protected>
+            <EquipmentList/>
+          </Protected>
+        )
+      },
+      {
+        path: "/equipments/create",
+        element: (
+          <Protected>
+            <EquipmentCreator/>
+          </Protected>
+        )
+      },
+      {
+        path: "/equipments/update/:id",
+        element: (
+          <Protected>
+            <EquipmentUpdater/>
+          </Protected>
+        )
       },
       {
         path: "/sign-in",

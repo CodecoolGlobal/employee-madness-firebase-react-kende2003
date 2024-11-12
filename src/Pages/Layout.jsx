@@ -35,6 +35,11 @@ const Layout = () => {
                       Create Employee
                     </Link>
                   </li>
+                  <li>
+                    <Link className="nav-link" to="/equipments">
+                      Equipments
+                    </Link>
+                  </li>
                 </>
               )}
               {!user && (

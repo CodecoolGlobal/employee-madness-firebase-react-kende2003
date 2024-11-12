@@ -1,8 +1,7 @@
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import DeleteButton from "./components/DeleteButton";
-import FilterInputs from "../../FilterInputs";
-
+import FilterInputs from "../../FilterInputs/FilterInputs";
 
 const EmployeeTable = ({ employees, onDelete }) => {
   const [upadtedEmployees, setUpdatedEmployess] = useState(employees)
