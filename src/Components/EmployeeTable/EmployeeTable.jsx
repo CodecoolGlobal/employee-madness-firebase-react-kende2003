@@ -71,25 +71,53 @@ const EmployeeTable = ({ employees, onDelete }) => {
 
       setFilteredEmployees(newFilteredEmployees);
   }, [filter, employees, upadtedEmployees]);
+  const ITEMS_PER_PAGE = 10;
   
+  const [currentPage, setCurrentPage] = useState(1)
+
+  const totalPages = Math.ceil(employees.length / ITEMS_PER_PAGE)
+
+  const indexOfLastItem = currentPage * ITEMS_PER_PAGE;
+  const indexOfFirstItem = indexOfLastItem - ITEMS_PER_PAGE;
+  const currentEmployees = filteredEmployees.slice(indexOfFirstItem, indexOfLastItem)
+
+  const handlePageChange = (page) => {
+    if (page > 0 && page <= totalPages) {
+      setCurrentPage(page)
+    }
+  }
+
+  const handleSort = () => {
+    currentEmployees.sort((a, b) => {
+      const nameA = a.nameObj[filter.name].toLowerCase() 
+      const nameB = b.nameObj[filter.name].toLowerCase() 
+
+        if (nameA < nameB) return -1;
+        if (nameA > nameB) return 1;
+        return 0;
+    });
+  }
   return (
     <>
   <FilterInputs onSubmit={setFilter}/>
  <table className="table table-striped table-bordered">
     <thead>
       <tr>
-        <th>Name</th>
+        <th onClick={upadtedEmployees.sort((a, b) => a.nameObj - b.nameObj)}>Name</th>
         <th>Level</th>
         <th>Position</th>
+        <th>Equipment</th>
         <th />
       </tr>
     </thead>
     <tbody>
-      {filteredEmployees.map((employee) => (
+      {currentEmployees.map((employee) => (
         <tr key={employee.id}>
           <td>{employee.name}</td>
           <td>{employee.level}</td>
           <td>{employee.position}</td>
+          <td>{employee.equipment}</td>
+          
           <td>
             <div className="btn-group">
               <Link to={`/update/${employee.id}`} className="btn btn-primary">
@@ -102,7 +130,21 @@ const EmployeeTable = ({ employees, onDelete }) => {
       ))}
     </tbody>
   </table>
-
+    <button className="btn info" onClick={()=>handlePageChange(currentPage - 1)} disabled={currentPage  === 1}>
+      Previous
+    </button>
+    {[...Array(totalPages)].map((value, i) => (
+      <button className="btn info" key={i}  onClick={()=>handlePageChange(i + 1)} style={{ fontWeight: currentPage === i + 1 ? "bold" : "normal", margin: "0 5px"}}>
+        {i + 1}
+        
+      </button>
+    ))
+    
+    }
+    
+    <button className="btn info" onClick={()=>handlePageChange(currentPage + 1)} disabled={currentPage  === totalPages}>
+      Next
+    </button>
  </>
   )
 }

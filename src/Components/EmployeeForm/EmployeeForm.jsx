@@ -38,9 +38,15 @@ const EmployeeForm = ({ onSave, disabled = false, employee, onCancel }) => {
           defaultValue={employee ? employee.position : null}
           name="position"
           id="position"
-          
+
         />
       </div>
+      <label className="form-label" htmlFor="equipment">Equipment:</label>
+      <select name="equipment" class="form-select" aria-label="Default select example" id="equipment"style={{marginBottom:"1rem"}}>
+          <option value="C#">C#</option>
+        <option value="JavaScript">JavaScript</option>
+        <option value="Python">Python</option>
+      </select>
 
       <div className="d-flex justify-content-start gap-3">
         <button type="submit" className="btn btn-primary" disabled={disabled}>
