@@ -19,7 +19,7 @@ const SignIn = () => {
       <h1>Sign In</h1>
       <AuthForm isSignIn onSubmit={handleSubmit} onGoogleAuth={signInWithGoogle} />
       {error ? <div className="error-box">{error}</div> : null}
-      <Link to="/sign-up">Sign in</Link>
+      <Link to="/sign-up">Sign Up</Link>
     </main>
   );
 };
